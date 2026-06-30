@@ -411,4 +411,696 @@ tr:last-child td { border-bottom: none; }
   border-radius: var(--r-lg);
   padding: 20px;
   margin-bottom: 16px;
-  box-shadow: var(--
+  box-shadow: var(--sh);
+}
+.qmeta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.qquestion { font-size: 14.5px; font-weight: 500; margin-bottom: 14px; line-height: 1.6; }
+.qoptions { display: flex; flex-direction: column; gap: 8px; }
+.qoption {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--surface);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13.5px;
+  text-align: left;
+  line-height: 1.5;
+  transition: all .15s;
+}
+.qoption:hover:not(:disabled) { background: var(--surface2); border-color: var(--border2); }
+.qletter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface2);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-mid);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.qoption.selected-correct { background: var(--ok-bg) !important; border-color: var(--ok) !important; }
+.qoption.selected-correct .qletter { background: var(--ok); color: white; }
+.qoption.selected-wrong { background: var(--danger-bg) !important; border-color: var(--danger) !important; }
+.qoption.selected-wrong .qletter { background: var(--danger); color: white; }
+.qoption.reveal-correct { background: var(--ok-bg); border-color: var(--ok); }
+
+.qfeedback {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--border2);
+  background: var(--surface2);
+  border-radius: 0 var(--r) var(--r) 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  display: none;
+}
+.qblock.answered .qfeedback { display: block; }
+
+/* ── DISCUSSÃO DE QUESTÕES (DQ) ── */
+.dq-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--sh);
+}
+.dq-question { font-size: 14.5px; font-weight: 500; margin-bottom: 14px; line-height: 1.6; }
+.dq-opts { display: flex; flex-direction: column; gap: 8px; }
+.dq-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--surface);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13.5px;
+  text-align: left;
+  line-height: 1.5;
+  transition: all .15s;
+}
+.dq-opt:hover { background: var(--surface2); border-color: var(--border2); }
+.dq-feedback {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--info);
+  background: var(--info-bg);
+  border-radius: 0 var(--r) var(--r) 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  display: none;
+}
+.dq-opt.active-opt { background: var(--info-bg); border-color: var(--info); }
+
+/* ── ANATOMIA COMPONENT ── */
+.anat-acc { border: 1px solid var(--border); border-radius: var(--r); margin-bottom: 8px; background: var(--surface); overflow: hidden; }
+.anat-toggle { width: 100%; padding: 10px 14px; background: var(--surface2); border: none; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; color: var(--purple); cursor: pointer; display: flex; justify-content: space-between; }
+.anat-body { padding: 14px; display: none; font-size: 13.5px; }
+.anat-acc.open .anat-body { display: block; }
+.anat-toggle::after { content: '▼'; font-size: 8px; }
+.anat-acc.open .anat-toggle::after { content: '▲'; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-logo">UFCAT · MEDICINA · TURMA VIII</span>
+    <span class="topbar-sep">|</span>
+    <span class="topbar-title">CTSAC-3 — Unidade 2 (Pós-AS1)</span>
+  </div>
+  <div class="badge"><span class="badge-dot"></span> Cronograma Ativo</div>
+</header>
+
+<nav class="tabnav">
+  <button class="tab active" data-t="imuno" onclick="switchTab('imuno')"><span class="tab-dot"></span> Imunologia</button>
+  <button class="tab" data-t="farma" onclick="switchTab('farma')"><span class="tab-dot"></span> Farmacologia</button>
+  <button class="tab" data-t="fisio" onclick="switchTab('fisio')"><span class="tab-dot"></span> Fisiologia</button>
+  <button class="tab" data-t="bioquim" onclick="switchTab('bioquim')"><span class="tab-dot"></span> Bioquímica</button>
+  <button class="tab" data-t="anat" onclick="switchTab('anat')"><span class="tab-dot"></span> Anatomia</button>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar" data-active="imuno">
+    </aside>
+
+  <main class="main">
+
+    <section class="panel active" id="p-imuno">
+      <div class="p-header">
+        <h2 class="p-title">Imunologia Clínica</h2>
+        <p class="p-subtitle">Maturação linfocitária, Tolerância Central/Periférica e respostas mediadas por anticorpos.</p>
+      </div>
+
+      <div class="sec-accordion" id="sec-im1">
+        <button class="sec-acc-toggle" onclick="toggleSec(this)">
+          <div>
+            <div class="sec-acc-title">Módulo 01 · Maturação de Linfócitos B e T</div>
+            <div class="sec-acc-meta">Recombinação somática, checkpoints de seleção e papel do fator AIRE.</div>
+          </div>
+          <span class="sec-acc-icon">▼</span>
+        </button>
+        <div class="sec-acc-body">
+          <div class="prereq">
+            <div class="prereq-header" onclick="togglePrereq(this)">Pré-Requisitos e Conceitos-Chave</div>
+            <div class="prereq-body">
+              <ul>
+                <li><strong>Medula Óssea e Timo:</strong> Órgãos linfoides primários responsáveis pela linfopoese (geração das células).</li>
+                <li><strong>Recombinação V(D)J:</strong> Rearranjo aleatório de segmentos gênicos mediado pelas endonucleases RAG-1 e RAG-2 para gerar a imensa diversidade do repertório de receptores (BCR e TCR).</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>1. Ontogenia e Maturação dos Linfócitos B</h3>
+          <p>O desenvolvimento dos linfócitos B ocorre na medula óssea através de estágios estritamente regulados pela expressão de proteínas de membrana e rearranjos gênicos:</p>
+          
+          <div class="tbl-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Estágio</th>
+                  <th>Rearranjo Habilidade</th>
+                  <th>Expressão de Cadeia/Receptor</th>
+                  <th>Checkpoints / Destino</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Célula-Tronco / Pró-B</strong></td>
+                  <td>Rearranjo D-J inicial; segue V-DJ na cadeia pesada (IgH). Mediado por RAG1/2 e TdT.</td>
+                  <td>Nenhum receptor de superfície ainda. Marcadores: CD19+, CD10+.</td>
+                  <td>Depende de IL-7 produzida pelo estroma medular para sobrevivência e proliferação.</td>
+                </tr>
+                <tr>
+                  <td><strong>Pré-B</strong></td>
+                  <td>Cadeia pesada rearranjada com sucesso. Inicia rearranjo V-J da cadeia leve (Loci κ ou λ).</td>
+                  <td>Expressa <strong>Pré-BCR</strong> (Cadeia μ + cadeia leve substituta VpreB/λ5) associada a Igα e Igβ.</td>
+                  <td><strong>1º Checkpoint:</strong> Sinalização constitutiva pelo Pré-BCR indica rearranjo produtivo da cadeia pesada. Inibe o outro alelo (exclusão alélica). Falha gera apoptose.</td>
+                </tr>
+                <tr>
+                  <td><strong>B Imaturo</strong></td>
+                  <td>Rearranjo completo de cadeias pesadas e leves concluído.</td>
+                  <td>Expressa <strong>IgM de membrana (mIgM)</strong> funcional.</td>
+                  <td><strong>2º Checkpoint:</strong> Teste de autorreatividade (Tolerância Central). Se reconhecer antígenos próprios multivalentes: sofrerá <em>Edição do Receptor</em> (muda a cadeia leve) ou <em>Deleção Clonal</em> (Apoptose).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>2. Maturação Tímica e o Fator de Transcrição AIRE</h3>
+          <p>Progenitores T migram da medula para o timo como células duplo-negativas (CD4-CD8-). No córtex tímico, após o rearranjo bem-sucedido da cadeia β e expressão de ambos os co-receptores, tornam-se <strong>Duplo-Positivos (CD4+CD8+)</strong>.</p>
+          
+          <div class="callout info">
+            <div class="callout-title">A Gangorra da Seleção Tímica e o papel de AIRE</div>
+            <p><strong>Seleção Positiva (Córtex):</strong> Os timócitos DP interagem com células epiteliais corticais tímicas (cTECs) que apresentam complexos MHC-peptídeo. Células cujos TCRs reconhecem o MHC próprio com afinidade fraca ou moderada recebem sinais de sobrevivência e sofrem restrição ao MHC (tornando-se simples-positivos CD4+ ou CD8+).</p>
+            <p><strong>Seleção Negativa e o Fator AIRE (Medula):</strong> Na medula tímica, os timócitos interagem com células epiteliais medulares tímicas (mTECs) e células dendríticas. O gene <strong>AIRE (Autoimmune Regulator)</strong> estimula as mTECs a expressarem uma vasta gama de **Antígenos Teciduais Periféricos (PTAs)** (ex: insulina, tireoglobulina, caseína) que normalmente só existem em órgãos distantes. Se um timócito interagir com alta afinidade contra esses autoantígenos, é eliminado por <strong>deleção clonal</strong> ou desviado para a linhagem de célula T reguladora (Treg natural).</p>
+          </div>
+
+          <div class="med-image-container">
+            
+            <div class="med-image-legend"><strong>Figura 1.1:</strong> Seleção Positiva (Córtex) e Negativa (Medula). O fator AIRE induz a síntese de antígenos teciduais para testar a autorreatividade dos timócitos.</div>
+          </div>
+
+          <div class="med-references">
+            <strong>Referências Bibliográficas:</strong><br>
+            • ABBAS, Abul K.; LICHTMAN, Andrew H.; PILLAI, Shiv. <strong>Imunologia Celular e Molecular</strong>. 10. ed. Rio de Janeiro: Elsevier, 2022. Cap. 8 (Desenvolvimento dos Linfócitos) e Cap. 9 (Tolerância Imunológica).
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-accordion" id="sec-im2">
+        <button class="sec-acc-toggle" onclick="toggleSec(this)">
+          <div>
+            <div class="sec-acc-title">Módulo 02 · Hipersensibilidades e Imunidade Humoral</div>
+            <div class="sec-acc-meta">Mecanismos efetores Th1/Th2/Th17, Class Switch e Hipersensibilidades Tipo I a IV.</div>
+          </div>
+          <span class="sec-acc-icon">▼</span>
+        </button>
+        <div class="sec-acc-body">
+          <p>Conteúdo detalhado sobre ativação de linfócitos T auxiliares, citocinas assinaturas e as reações imunopatológicas clássicas de Coombs e Gell.</p>
+          
+          <div class="med-references">
+            <strong>Referências Bibliográficas:</strong><br>
+            • ABBAS, Abul K.; LICHTMAN, Andrew H.; PILLAI, Shiv. <strong>Imunologia Celular e Molecular</strong>. 10. ed. Rio de Janeiro: Elsevier, 2022. Cap. 14 (Imunidade Humoral) e Cap. 19 (Doenças por Hipersensibilidade).
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-container">
+        <div class="quiz-section-title">
+          <span>Verificação de Aprendizagem (Active Recall)</span>
+          <span class="quiz-score-badge" id="sc-qimuno">Pontuação: <span id="sv-qimuno">0 / 0</span></span>
+        </div>
+
+        <div class="qblock" id="q-im1">
+          <div class="qmeta">QUESTÃO 1 · MATURAÇÃO TÍMICA</div>
+          <div class="qquestion">Um defeito molecular ou mutação de perda de função no gene AIRE (Autoimmune Regulator) em humanos resulta na Síndrome Poliendócrina Autoimune Tipo 1 (APS-1 / APECED). O mecanismo fisiopatológico que explica as manifestações autoimunes sistêmicas nesses pacientes baseia-se na:</div>
+          <div class="qoptions">
+            <button class="qoption" onclick="checkAnswer(this, 'A', true)"><span class="qletter">A</span> Ausência de expressão de antígenos restritos a tecidos periféricos na medula tímica, permitindo o escape de clones T autorreativos para a periferia.</button>
+            <button class="qoption" onclick="checkAnswer(this, 'B', false)"><span class="qletter">B</span> Falha na recombinação V(D)J mediada por RAG-1 e RAG-2, impedindo a transição de timócitos duplo-negativos para duplo-positivos.</button>
+            <button class="qoption" onclick="checkAnswer(this, 'C', false)"><span class="qletter">C</span> Interrupção da seleção positiva no córtex tímico devido à incapacidade das células epiteliais corticais (cTECs) de expressarem MHC de classe II.</button>
+          </div>
+          <div class="qfeedback" data-correct="A">
+            <strong>Informativo Didático:</strong> A alternativa A está correta. O fator AIRE atua especificamente nas mTECs regulando a transcrição de proteínas periféricas. Sem ele, linfócitos T com alta afinidade para tecidos como paratireoide e adrenal não sofrem seleção negativa e causam destruição endócrina crônica autoimune na periferia.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="p-farma">
+      <div class="p-header">
+        <h2 class="p-title">Farmacologia Integrada</h2>
+        <p class="p-subtitle">Mecanismos farmacodinâmicos, alvos terapêuticos e parâmetros farmacocinéticos.</p>
+      </div>
+
+      <div class="sec-accordion" id="sec-fa1">
+        <button class="sec-acc-toggle" onclick="toggleSec(this)">
+          <div>
+            <div class="sec-acc-title">Módulo 01 · Glicocorticoides</div>
+            <div class="sec-acc-meta">Mecanismos genômicos (transrepressão e transativação) e efeitos colaterais sistêmicos.</div>
+          </div>
+          <span class="sec-acc-icon">▼</span>
+        </button>
+        <div class="sec-acc-body">
+          <h3>1. Mecanismo Farmacodinâmico Celular</h3>
+          <p>Os glicocorticoides são fármacos lipofílicos que atravessam livremente a membrana citoplasmática para interagir com o Receptor de Glicocorticoide (GR), que se encontra estabilizado no citosol por proteínas de choque térmico (Hsp90). Após a ligação, o GR dissocia-se das Hsps e transloca-se ao núcleo, exercendo seus efeitos por duas vias gênicas principais:</p>
+          
+          <ul>
+            <li><strong>Transrepressão (Efeito Anti-inflamatório Predominante):</strong> O monômero do GR ativado interage fisicamente e inibe fatores de transcrição pró-inflamatórios livres no núcleo, notavelmente o <strong>NF-κB (Nuclear Factor Kappa B)</strong> e o <strong>AP-1</strong>. Isso bloqueia diretamente a transcrição de citocinas inflamatórias (IL-1, IL-2, IL-6, TNF-α), quimiocinas e enzimas como a COX-2 e a NOS induzível (iNOS).</li>
+            <li><strong>Transativação (Efeito Metabólico e de Síntese):</strong> O GR homodimeriza-se e liga-se a sequências específicas do DNA chamadas <strong>Elementos de Resposta a Glicocorticoides (GRE)</strong>. Isso induz a transcrição de proteínas anti-inflamatórias (como a Lipocortina-1 / Anexina-1, que inibe a Fosfolipase A2, e a MKP-1). No entanto, a transativação crônica de genes metabólicos é a grande responsável pelos efeitos colaterais (gliconeogênese, lipólise, catabolismo proteico).</li>
+          </ul>
+
+          <div class="med-image-container">
+            
+            <div class="med-image-legend"><strong>Figura 2.1:</strong> Mecanismo de Ação do GR. A transrepressão do NF-κB responde pela potente ação anti-inflamatória, enquanto a transativação via GRE gera os efeitos colaterais metabólicos.</div>
+          </div>
+
+          <div class="med-references">
+            <strong>Referências Bibliográficas:</strong><br>
+            • BRUNTON, Laurence L.; KNOLLMANN, Björn C. <strong>As Bases Farmacológicas da Terapêutica de Goodman & Gilman</strong>. 14. ed. Porto Alegre: AMGH, 2023. Cap. 48 (Hormônios Adrenocorticais).
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-accordion" id="sec-fa2">
+        <button class="sec-acc-toggle" onclick="toggleSec(this)">
+          <div>
+            <div class="sec-acc-title">Módulo 02 · Quimioterapia do Câncer e Ciclo Celular</div>
+            <div class="sec-acc-meta">Alquilantes, antimetabólitos, antimitóticos e estabilizadores de microtúbulos.</div>
+          </div>
+          <span class="sec-acc-icon">▼</span>
+        </button>
+        <div class="sec-acc-body">
+          <p>Mapeamento de agentes antineoplásicos específicos e suas respectivas fases de atuação no ciclo celular eucariótico.</p>
+          
+          <div class="tbl-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Classe de Fármaco</th>
+                  <th>Exemplos Clínicos</th>
+                  <th>Fase Alvo Principal</th>
+                  <th>Mecanismo de Toxicidade Celular</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Agentes Alquilantes</strong></td>
+                  <td>Ciclofosfamida, Cisplatina</td>
+                  <td>Fase-Inespecífico</td>
+                  <td>Formação de ligações cruzadas covalentes nas cadeias de DNA, impedindo a replicação e induzindo apoptose via p53.</td>
+                </tr>
+                <tr>
+                  <td><strong>Antimetabólitos</strong></td>
+                  <td>Metotrexato, 5-Fluorouracil (5-FU)</td>
+                  <td><strong>Fase S</strong></td>
+                  <td>Análogos estruturais que inibem enzimas chave (ex: Di-hidrofolato redutase pelo MTX), bloqueando a síntese de purinas/pirimidinas.</td>
+                </tr>
+                <tr>
+                  <td><strong>Inibidores de Topoisomerase</strong></td>
+                  <td>Etoposídeo, Doxorrubicina</td>
+                  <td><strong>Fase G2 / S</strong></td>
+                  <td>Estabilizam o complexo clivável de topoisomerases I ou II, gerando quebras permanentes na fita dupla de DNA.</td>
+                </tr>
+                <tr>
+                  <td><strong>Taxanos e Alcaloides da Vinca</strong></td>
+                  <td>Paclitaxel, Vincristina</td>
+                  <td><strong>Fase M</strong></td>
+                  <td>Vincas impedem a polimerização do fuso mitótico; Taxanos hiperestabilizam os microtúbulos, impedindo a anáfase.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="med-image-container">
+            
+            <div class="med-image-legend"><strong>Figura 2.2:</strong> Ciclo Celular e Sítios de Ação dos Quimioterápicos. Fármacos específicos de fase (S ou M) versus quimioterápicos fase-inespecíficos.</div>
+          </div>
+
+          <div class="med-references">
+            <strong>Referências Bibliográficas:</strong><br>
+            • KATZUNG, Bertram G.; TREVOR, Anthony J. <strong>Farmacologia Básica e Clínica</strong>. 14. ed. Porto Alegre: AMGH, 2021. Cap. 54 (Quimioterapia do Câncer).
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-accordion" id="sec-fa3">
+        <button class="sec-acc-toggle" onclick="toggleSec(this)">
+          <div>
+            <div class="sec-acc-title">Módulo 03 · Farmacocinética Avançada</div>
+            <div class="sec-acc-meta">Modelos compartimentais, Cinética de Eliminação e cálculo de Clearance.</div>
+          </div>
+          <span class="sec-acc-icon">▼</span>
+        </button>
+        <div class="sec-acc-body">
+          <p>Discussão matemática e clínica sobre constantes de eliminação, tempo de meia-vida ($t_{1/2}$) e estado de equilíbrio estacionário (*Steady State*).</p>
+          
+          <div class="med-references">
+            <strong>Referências Bibliográficas:</strong><br>
+            • BRUNTON, Laurence L.; KNOLLMANN, Björn C. <strong>As Bases Farmacológicas da Terapêutica de Goodman & Gilman</strong>. 14. ed. Porto Alegre: AMGH, 2023. Cap. 2 (Farmacocinética: Dinâmica da Absorção, Distribuição, Metabolismo e Eliminação de Fármacos).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="p-fisio">
+      <div class="p-header">
+        <h2 class="p-title">Fisiologia Humana Médica</h2>
+        <p class="p-subtitle">Sistemas de regulação homeostática e feedbacks endócrinos.</p>
+      </div>
+
+      <div class="sec-accordion" id="sec-fi1">
+        <button class="sec-acc-toggle" onclick="toggleSec(this)">
+          <div>
+            <div class="sec-acc-title">Módulo 01 · Homeostase e Regulação do Cálcio</div>
+            <div class="sec-acc-meta">Eixo PTH, Vitamina D e Calcitocina. Mecanismo do receptor CaSR.</div>
+          </div>
+          <span class="sec-acc-icon">▼</span>
+        </button>
+        <div class="sec-acc-body">
+          <h3>1. O Receptor Sensor de Cálcio (CaSR) e Controle do PTH</h3>
+          <p>A regulação dos níveis plasmáticos de cálcio ionizado (Ca²⁺) livre é crucial para fenômenos de excitabilidade neuromuscular, coagulação e acoplamento excitação-contração. O principal sensor celular desse sistema é o <strong>CaSR (Calcium-Sensing Receptor)</strong>, um receptor acoplado à proteína G (Gq/11 e Gi) altamente expresso na membrana das células principais das glândulas paratireoides.</p>
+          
+          <ul>
+            <li><strong>Em Hipercalcemia (Ca²⁺ elevado):</strong> O cálcio liga-se e ativa o CaSR. A sinalização via Gq ativa a fosfolipase C, aumentando IP3/DAG e elevando transitoriamente o cálcio intracelular de depósitos, o que paradoxalmente <strong>inibe a exocitose de vesículas pré-formadas de Paratormônio (PTH)</strong>. Adicionalmente, a ativação via Gi reduz o AMPc, diminuindo a síntese de novo de PTH.</li>
+            <li><strong>Em Hipocalcemia (Ca²⁺ baixo):</strong> O CaSR permanece inativo/desocupado. Cessam os sinais inibitórios intracelulares, permitindo a liberação maciça e imediata de PTH na circulação.</li>
+          </ul>
+
+          <div class="med-image-container">
+            
+            <div class="med-image-legend"><strong>Figura 3.1:</strong> Arco de Feedback do CaSR. A ativação do receptor por altos níveis de cálcio gera um sinal paradoxal que bloqueia a exocitose das vesículas de PTH.</div>
+          </div>
+
+          <div class="med-references">
+            <strong>Referências Bibliográficas:</strong><br>
+            • GUYTON, Arthur C.; HALL, John E. <strong>Tratado de Fisiologia Médica</strong>. 14. ed. Rio de Janeiro: Elsevier, 2021. Cap. 80 (Hormônio Paratireóideo, Calcitonina, Metabolismo do Cálcio e do Fosfato).
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-container">
+        <div class="quiz-section-title">Discussão Prática Clínico-Fisiológica</div>
+        
+        <div class="dq-block">
+          <div class="dq-question"><strong>Caso Clínico Integrado:</strong> Um paciente adulto apresenta tiroidectomia total pós-carcinoma papilífero. No segundo dia pós-operatório, evolui com parestesias periorais, espasmos carpopodais ao inflar o manguito de pressão arterial (Sinal de Trousseau positivos). O nexo fisiológico celular e a conduta imediata baseiam-se em:</div>
+          <div class="dq-opts">
+            <div class="dq-opt" onclick="dqAnswer(this, 'dq1-a')"><span class="qletter">A</span> Hipocalcemia por remoção inadvertida das paratireoides, gerando hiperexcitabilidade axonal por redução do limiar de abertura dos canais de Na+ voltagem-dependentes; conduta: Gluconato de Cálcio IV.</div>
+            <div class="dq-opt" onclick="dqAnswer(this, 'dq1-b')"><span class="qletter">B</span> Hipercalcemia rebote pela lesão tecidual, bloqueando canais de potássio estabilizadores; conduta: Furosemida e hidratação vigorosa.</div>
+          </div>
+          <div class="dq-feedback" id="dq1-a">
+            <strong>Discussão Clínica Padrão-Ouro:</strong> Excelente raciocínio. A retirada acidental ou desvascularização das paratireoides causa hipoparatireoidismo agudo. O cálcio extracelular atua estabilizando os canais de sódio voltagem-dependentes na membrana nervosa. Sua falta reduz a carga positiva externa, tornando a célula mais propensa à despolarização espontânea (tetania clínica). O Sinal de Trousseau reflete essa hiperexcitabilidade isquêmica. Tratamento requer reposição imediata.
+          </div>
+          <div class="dq-feedback" id="dq1-b">
+            <strong>Refutação Didática:</strong> Incorreto. O quadro clínico de espasmos musculares pós-tireoidectomia aponta invariavelmente para hipocalcemia, e não hipercalcemia.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="p-bioquim">
+      <div class="p-header">
+        <h2 class="p-title">Bioquímica Médica</h2>
+        <p class="p-subtitle">Metabolismo integrado, regulação enzimática e estresse oxidativo.</p>
+      </div>
+
+      <div class="sec-accordion" id="sec-bq1">
+        <button class="sec-acc-toggle" onclick="toggleSec(this)">
+          <div>
+            <div class="sec-acc-title">Módulo 01 · Integração Metabólica e Sinalização Energética</div>
+            <div class="sec-acc-meta">Vias reguladas por AMPK, mTOR e estresse mitocondrial.</div>
+          </div>
+          <span class="sec-acc-icon">▼</span>
+        </button>
+        <div class="sec-acc-body">
+          <h3>1. O Eixo AMPK / mTOR e o Sensor Energético Celular</h3>
+          <p>A coordenação entre o anabolismo (construção e gasto de energia) e o catabolismo (quebra e geração de ATP) celular em resposta à disponibilidade de nutrientes é gerenciada bioquimicamente pela competição alostérica e fosforilação cruzada entre a **AMPK (AMP-activated protein kinase)** e o **mTORC1 (mammalian target of rapamycin complex 1)**.</p>
+          
+          <div class="med-references">
+            <strong>Referências Bibliográficas:</strong><br>
+            • NELSON, David L.; COX, Michael M. <strong>Princípios de Bioquímica de Lehninger</strong>. 7. ed. Porto Alegre: Artmed, 2019. Cap. 23 (Regulação Hormonal e Integração do Metabolismo dos Mamíferos).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="p-anat">
+      <div class="p-header">
+        <h2 class="p-title">Anatomia Humana Clínica</h2>
+        <p class="p-subtitle">Estudo topográfico estrutural, anatomia seccional e correlações imaginológicas.</p>
+      </div>
+
+      <div class="sec-accordion" id="sec-an1">
+        <button class="sec-acc-toggle" onclick="toggleSec(this)">
+          <div>
+            <div class="sec-acc-title">Módulo 01 · Anatomia do Mediastino e Hilo Pulmonar</div>
+            <div class="sec-acc-meta">Limites topográficos do tórax, vasos da base e topografia radicular.</div>
+          </div>
+          <span class="sec-acc-icon">▼</span>
+        </button>
+        <div class="sec-acc-body">
+          <h3>1. Divisões Topográficas do Mediastino</h3>
+          <p>O mediastino é o compartimento anatômico central da cavidade torácica, completamente interposto entre as duas cavidades pleurais. É delimitado lateralmente pelas pleuras mediastinais, anteriormente pelo esterno/cartilagens costais e posteriormente pelos corpos vertebrais das vértebras torácicas.</p>
+          
+          <div class="anat-acc">
+            <div class="anat-toggle" onclick="toggleAnat(this)">Limites do Mediastino Superior e Inferior</div>
+            <div class="anat-body">
+              <p>O plano transverso do tórax (plano imaginário que se estende do ângulo esternal de Louis até o disco intervertebral de T4-T5) divide o mediastino em:</p>
+              <ul>
+                <li><strong>Mediastino Superior:</strong> Limite superior na abertura superior do tórax. Conteúdo estrutural crítico: arco aórtico, tronco braquiocefálico, artéria carótida comum esquerda, artéria subclávia esquerda, veias braquiocefálicas, veia cava superior, traqueia, esôfago, nervos vagos, frênicos e o ducto torácico.</li>
+                <li><strong>Mediastino Inferior:</strong> Subdividido pelo saco pericárdico em:
+                  <br>• <em>Anterior:</em> Tecido adiposo, ligamentos esternopericárdicos, restos do timo.
+                  <br>• <em>Médio:</em> Pericárdio, coração, aorta ascendente, tronco pulmonar, veia cava superior (porção inferior), nervos frênicos e brônquios principais.
+                  <br>• <em>Posterior:</em> Esôfago, aorta torácica descendente, sistema da veia ázigos/hemiázigos, ducto torácico e troncos simpáticos.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="med-image-container">
+            
+            <div class="med-image-legend"><strong>Figura 5.1:</strong> Divisões do Mediastino. O plano axial que passa pelo ângulo esternal (T4-T5) é a demarcação cirúrgica central da anatomia torácica.</div>
+          </div>
+
+          <div class="med-references">
+            <strong>Referências Bibliográficas:</strong><br>
+            • MOORE, Keith L.; DALLEY, Arthur F.; AGUR, Anne M. R. <strong>Anatomia Orientada para a Clínica</strong>. 8. ed. Rio de Janeiro: Guanabara Koogan, 2019. Cap. 4 (Tórax: Mediastino).
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+const menuData = {
+  imuno: [
+    { title: "Módulos de Estudo", links: [
+      { id: "sec-im1", label: "Módulo 01 · Maturação & AIRE" },
+      { id: "sec-im2", label: "Módulo 02 · Hipersensibilidades" }
+    ] }
+  ],
+  farma: [
+    { title: "Módulos de Estudo", links: [
+      { id: "sec-fa1", label: "Módulo 01 · Glicocorticoides" },
+      { id: "sec-fa2", label: "Módulo 02 · Quimioterapia" },
+      { id: "sec-fa3", label: "Módulo 03 · Farmacocinética" }
+    ] }
+  ],
+  fisio: [
+    { title: "Módulos de Estudo", links: [
+      { id: "sec-fi1", label: "Módulo 01 · Homeostase do Ca²⁺" }
+    ] }
+  ],
+  bioquim: [
+    { title: "Módulos de Estudo", links: [
+      { id: "sec-bq1", label: "Módulo 01 · Eixo AMPK/mTOR" }
+    ] }
+  ],
+  anat: [
+    { title: "Módulos de Estudo", links: [
+      { id: "sec-an1", label: "Módulo 01 · Anatomia Mediastinal" }
+    ] }
+  ]
+};
+
+const prefixToQuiz = { 'q': 'imuno' };
+let scores = { 'q': { c: 0, t: 1 } };
+let answered = {};
+
+function buildSidebar(discipline) {
+  const sb = document.getElementById('sidebar');
+  sb.setAttribute('data-active', discipline);
+  sb.innerHTML = '';
+
+  const groups = menuData[discipline] || [];
+  groups.forEach(g => {
+    const sec = document.createElement('div');
+    sec.className = 'sb-section';
+    
+    const title = document.createElement('div');
+    title.className = 'sb-title';
+    title.textContent = g.title;
+    sec.appendChild(title);
+
+    const linksCont = document.createElement('div');
+    linksCont.className = 'sb-links';
+
+    g.links.forEach(l => {
+      const a = document.createElement('a');
+      a.className = 'sb-link';
+      a.textContent = l.label;
+      a.setAttribute('onclick', `scrollToSection('${l.id}')`);
+      linksCont.appendChild(a);
+    });
+
+    sec.appendChild(linksCont);
+    sb.appendChild(sec);
+  });
+}
+
+function switchTab(discipline) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+
+  const btn = document.querySelector(`.tab[data-t="${discipline}"]`);
+  if (btn) btn.classList.add('active');
+
+  const panel = document.getElementById(`p-${discipline}`);
+  if (panel) panel.classList.add('active');
+
+  buildSidebar(discipline);
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  
+  if (el.classList.contains('sec-accordion') && !el.classList.contains('open')) {
+    el.classList.add('open');
+  }
+
+  const offset = 110;
+  const bodyRect = document.body.getBoundingClientRect().top;
+  const elementRect = el.getBoundingClientRect().top;
+  const elementPosition = elementRect - bodyRect;
+  const offsetPosition = elementPosition - offset;
+
+  window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
+  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+  const currentLink = [...document.querySelectorAll('.sb-link')].find(l => 
+    l.getAttribute('onclick') && l.getAttribute('onclick').includes(`'${id}'`)
+  );
+  if (currentLink) currentLink.classList.add('active');
+}
+
+function checkAnswer(btn, opt, isCorrect) {
+  const block = btn.closest('.qblock');
+  if (block.classList.contains('answered')) return;
+
+  block.classList.add('answered');
+  const qid = block.id;
+  const prefix = qid.split('-')[0];
+  answered[qid] = true;
+
+  const options = block.querySelectorAll('.qoption');
+  options.forEach(o => o.disabled = true);
+
+  if (isCorrect) {
+    btn.classList.add('selected-correct');
+    if (scores[prefix]) scores[prefix].c++;
+  } else {
+    btn.classList.add('selected-wrong');
+    const fbk = block.querySelector('.qfeedback');
+    const corrOpt = fbk.getAttribute('data-correct');
+    options.forEach(o => {
+      if (o.getAttribute('onclick').includes(`'${corrOpt}'`)) {
+        o.classList.add('reveal-correct');
+      }
+    });
+  }
+
+  updateScoreDisplay(prefix);
+}
+
+function updateScoreDisplay(prefix) {
+  const quizName = prefixToQuiz[prefix];
+  if (!quizName) return;
+
+  const allBlocks = document.querySelectorAll(`.qblock[id^="${prefix}-"]`);
+  const allDone = [...allBlocks].every(b => answered[b.id]);
+  if (allDone) {
+    const sc = scores[prefix];
+    const scoreEl = document.getElementById('sc-q' + quizName);
+    if (scoreEl) {
+      scoreEl.classList.add('show');
+      const val = document.getElementById('sv-q' + quizName);
+      if (val) {
+        val.textContent = `${sc.c} / ${sc.t}`;
+        val.style.color = sc.c === sc.t ? 'var(--ok)' : 'var(--warn)';
+      }
+    }
+  }
+}
+
+function toggleSec(btn) {
+  const acc = btn.closest('.sec-accordion');
+  const wasOpen = acc.classList.contains('open');
+  acc.classList.toggle('open');
+  if (!wasOpen) {
+    document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+    const id = acc.id;
+    document.querySelectorAll('.sb-link').forEach(l => {
+      if (l.getAttribute('onclick') && l.getAttribute('onclick').includes(`'${id}'`)) {
+        l.classList.add('active');
+      }
+    });
+  }
+}
+
+function toggleAnat(btn) {
+  const acc = btn.closest('.anat-acc');
+  acc.classList.toggle('open');
+}
+
+function togglePrereq(el) {
+  const block = el.closest('.prereq');
+  block.classList.toggle('open');
+}
+
+function dqAnswer(btn, targetId) {
+  var parent = btn.parentElement;
+  parent.querySelectorAll('.dq-opt').forEach(b => b.classList.remove('active-opt'));
+  btn.classList.add('active-opt');
+
+  var block = btn.closest('.dq-block');
+  block.querySelectorAll('.dq-feedback').forEach(f => f.style.display = 'none');
+
+  var target = document.getElementById(targetId);
+  if (target) target.style.display = 'block';
+}
+
+// Inicialização padrão
+buildSidebar('imuno');
+</script>
+</body>
+</html>

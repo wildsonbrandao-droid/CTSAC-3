@@ -2564,6 +2564,7 @@
     .quiz-tab.t-farmaco.active{background:linear-gradient(135deg,var(--farmaco),var(--farmaco-2))}
     .quiz-tab.t-imuno.active{background:linear-gradient(135deg,var(--imuno),var(--imuno-2))}
     .quiz-tab.t-caso.active{background:linear-gradient(135deg,var(--caso),var(--caso-2))}
+    .quiz-tab.t-as2.active{background:linear-gradient(135deg,var(--atlas),var(--atlas-2))}
     .quiz-score{font-weight:800; font-size:14px; color:var(--ink); background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:14px; display:inline-block}
     .qcard{border:1px solid var(--line); border-radius:var(--radius-sm); padding:16px 18px; margin:12px 0; background:var(--surface); box-shadow:var(--shadow-sm)}
     .qcard .qn{font-weight:800; font-size:15px; margin-bottom:10px}
@@ -2697,13 +2698,35 @@
     {q:"Comer proteínas e fibras antes dos carboidratos ajuda no controle glicêmico porque:",o:["Bloqueia o SGLT2","Aumenta a secreção endógena de GLP-1 e retarda o esvaziamento gástrico","Inibe a insulina","Ativa o glucagon"],a:1,e:"Estimula incretinas e lentifica a absorção da glicose, reduzindo o pico glicêmico pós-prandial."},
   ]};
 
+
+  QUIZ.as2 = { nome:"Unidade 2 (AS2)", cls:"t-as2", perguntas:[
+    {q:"A deleção de linfócitos autorreativos no timo, com o gene AIRE apresentando autoantígenos, é a:",o:["Tolerância periférica","Tolerância central","Seleção positiva","Anergia"],a:1,e:"A tolerância central (timo/medula) deleta clones de alta afinidade ao próprio; o AIRE expressa autoantígenos de vários órgãos no timo."},
+    {q:"Uma infecção cujo antígeno se parece com um antígeno próprio, desencadeando autoimunidade, ilustra:",o:["Superantígeno","Mimetismo molecular","Anergia clonal","Deleção negativa"],a:1,e:"No mimetismo molecular, a resposta contra o micróbio reage de forma cruzada com o próprio (ex.: febre reumática)."},
+    {q:"O lúpus eritematoso sistêmico é caracterizado pelo autoanticorpo:",o:["Anti-CCP","Anti-dsDNA","Anti-TPO","Anti-AChR"],a:1,e:"Anti-dsDNA e anti-Sm são marcadores do LES; formam imunocomplexos (hipersensibilidade tipo III)."},
+    {q:"Hashimoto e diabetes tipo 1 são exemplos de doenças autoimunes:",o:["Sistêmicas","Órgão-específicas","Por imunocomplexos apenas","Sem autoanticorpos"],a:1,e:"Miram um órgão/tecido específico (tireoide e células β), diferentemente das sistêmicas como o LES."},
+    {q:"A sequência da imunoedição do câncer é:",o:["Escape → equilíbrio → eliminação","Eliminação → equilíbrio → escape","Equilíbrio → eliminação → escape","Eliminação → escape → equilíbrio"],a:1,e:"Os '3 Es': o imune elimina, depois há equilíbrio com seleção de variantes, e por fim o tumor escapa."},
+    {q:"Um tumor que expressa PD-L1 escapa do sistema imune porque:",o:["Aumenta o MHC I","Desliga o linfócito T (via PD-1)","Ativa as células NK","Recruta neutrófilos"],a:1,e:"O PD-L1 tumoral liga-se ao PD-1 do linfócito T, inibindo-o; os anti-PD-1/PD-L1 revertem esse freio."},
+    {q:"A rejeição de transplante que ocorre em minutos, por anticorpos pré-formados, é a:",o:["Aguda","Crônica","Hiperaguda","GVHD"],a:2,e:"A rejeição hiperaguda decorre de anticorpos pré-formados (ABO/HLA) → trombose imediata do enxerto."},
+    {q:"No transplante de medula óssea, quando as células do doador atacam o receptor, ocorre:",o:["Rejeição aguda","GVHD (enxerto contra hospedeiro)","Rejeição hiperaguda","Tolerância"],a:1,e:"A GVHD é o inverso da rejeição: o enxerto (linfócitos do doador) ataca os tecidos do hospedeiro."},
+    {q:"Ciclosporina e tacrolimo agem bloqueando a calcineurina, o que reduz:",o:["A produção de IL-2","A síntese de DNA","A ligação ao TNF","A ativação do complemento"],a:0,e:"Sem calcineurina não há ativação do NFAT nem transcrição de IL-2, impedindo a proliferação dos linfócitos T."},
+    {q:"O rituximabe é um biológico que atua:",o:["Neutralizando o TNF","Depletando linfócitos B (anti-CD20)","Bloqueando a IL-6","Inibindo a calcineurina"],a:1,e:"Anti-CD20 depleta os linfócitos B — usado em linfomas e doenças autoimunes."},
+    {q:"Antes de iniciar um agente biológico anti-TNF, deve-se obrigatoriamente rastrear:",o:["Diabetes","Tuberculose latente e hepatites","Anemia","Dislipidemia"],a:1,e:"O anti-TNF pode reativar tuberculose latente e hepatites B/C; o rastreio é mandatório."},
+    {q:"A mielossupressão, mucosite e alopecia da quimioterapia ocorrem porque os agentes atingem:",o:["Apenas células tumorais","Células de divisão rápida (medula, mucosa, folículo)","Só o fígado","Neurônios"],a:1,e:"A quimioterapia clássica não distingue tumor de tecidos normais que se dividem rápido."},
+    {q:"O metotrexato exerce seu efeito antineoplásico ao:",o:["Alquilar o DNA","Inibir a diidrofolato redutase (↓ síntese de DNA)","Estabilizar microtúbulos","Inibir a topoisomerase"],a:1,e:"É um antimetabólito: bloqueia a diidrofolato redutase, travando a síntese de nucleotídeos."},
+    {q:"A toxicidade característica da doxorrubicina é:",o:["Nefrotoxicidade","Cardiotoxicidade","Neuropatia periférica","Fibrose pulmonar"],a:1,e:"Doxorrubicina (antraciclina) → cardiotoxicidade; cisplatina → nefro/oto; vincristina → neuro; bleomicina → pulmão."},
+    {q:"O imatinibe é um exemplo de terapia-alvo porque:",o:["Danifica o DNA de todas as células","Inibe uma tirosina-quinase específica do tumor (BCR-ABL)","É um alquilante","Estimula o sistema imune"],a:1,e:"Inibe a tirosina-quinase BCR-ABL da leucemia mieloide crônica, poupando células normais."},
+    {q:"O estresse oxidativo é definido como:",o:["Ausência total de radicais livres","Desequilíbrio entre produção de EROs e defesas antioxidantes","Excesso de antioxidantes","Falta de oxigênio"],a:1,e:"Ocorre quando a produção de espécies reativas de oxigênio supera a capacidade antioxidante (SOD, catalase, glutationa)."},
+    {q:"A enzima que converte o superóxido (O₂•⁻) em peróxido de hidrogênio é a:",o:["Catalase","Superóxido dismutase (SOD)","Glutationa peroxidase","Aldose redutase"],a:1,e:"A SOD faz O₂•⁻ → H₂O₂; depois catalase e glutationa peroxidase convertem o H₂O₂ em água."},
+    {q:"O malondialdeído (MDA) é um biomarcador de:",o:["Dano ao DNA","Peroxidação lipídica","Glicação","Inflamação sistêmica"],a:1,e:"MDA reflete peroxidação de lipídios de membrana; o 8-OHdG reflete dano oxidativo ao DNA."},
+  ]};
+
   // ---- engine ----
   (function(){
     const tabsEl=document.getElementById('quizTabs');
     const bodyEl=document.getElementById('quizBody');
     const scoreEl=document.getElementById('quizScore');
     const resetEl=document.getElementById('quizReset');
-    const order=['fisio','bioq','farmaco','imuno','caso'];
+    const order=['fisio','bioq','farmaco','imuno','caso','as2'];
     let cur='fisio';
     const state={};
     order.forEach(k=>state[k]={answered:0,correct:0});

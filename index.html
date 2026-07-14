@@ -387,6 +387,20 @@
 
 <!-- ================= MAIN ================= -->
 <main>
+  <style>
+  .q-cta{display:flex; align-items:center; gap:18px; margin:8px 0 30px; padding:20px 22px; border-radius:16px;
+    background:var(--accent-bg); border:1px solid var(--accent-line); border-left:5px solid var(--accent); scroll-margin-top:14px}
+  .q-cta-ic{flex:none; width:46px; height:46px; border-radius:12px; display:grid; place-items:center; font-size:22px; color:#fff;
+    background:linear-gradient(135deg,var(--accent),var(--accent2))}
+  .q-cta-tx{flex:1; display:flex; flex-direction:column; gap:2px; min-width:0}
+  .q-cta-kick{font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:800; color:var(--accent)}
+  .q-cta-tx b{font-size:16px; color:var(--ink)}
+  .q-cta-sub{font-size:13px; color:var(--ink-soft)}
+  .q-cta-btn{flex:none; border:none; cursor:pointer; font-weight:800; font-size:14px; padding:11px 20px; border-radius:11px; color:#fff;
+    background:linear-gradient(135deg,var(--accent),var(--accent2)); transition:transform .12s, filter .12s}
+  .q-cta-btn:hover{filter:brightness(1.06); transform:translateY(-1px)}
+  @media(max-width:640px){.q-cta{flex-wrap:wrap; gap:12px} .q-cta-btn{width:100%}}
+  </style>
   <header class="hero">
     <div class="eyebrow">Guia de estudo · consolidado da pasta</div>
     <h1 class="serif">Sistema endócrino, farmacologia e imunologia</h1>
@@ -1038,6 +1052,16 @@
       </div>
     </section>
 
+    <div class="q-cta d-fisio" id="q-fisio">
+      <div class="q-cta-ic">✎</div>
+      <div class="q-cta-tx">
+        <span class="q-cta-kick">Fixe o conteúdo · Fisiologia</span>
+        <b>Questões para estudar</b>
+        <span class="q-cta-sub"><span data-q="fisio"></span> questões no formato de prova (5 alternativas), com correção e explicação imediatas.</span>
+      </div>
+      <button class="q-cta-btn" onclick="irParaQuiz('fisio')">Responder →</button>
+    </div>
+
   <!-- ==================== BIOQUÍMICA ==================== -->
   <div class="discipline d-bioq">
     <div class="disc-banner" id="mat-bioq"><span class="num">02</span><h2>Bioquímica · Sinalização, síntese e metabolismo</h2></div>
@@ -1469,6 +1493,16 @@
       <div class="note bio"><span class="nh">O elo com o diabetes</span>A hiperglicemia crônica aumenta a produção de <abbr title="espécies reativas de oxigênio">EROs</abbr> e alimenta a via do poliol e a formação de <strong><abbr title="produtos finais de glicação avançada">AGEs</abbr></strong> — por isso o estresse oxidativo é considerado um mecanismo unificador das complicações micro e macrovasculares do diabetes, fechando a Unidade 2 junto com a resistência à insulina e a glicação.</div>
     </section>
 
+
+    <div class="q-cta d-bioq" id="q-bioq">
+      <div class="q-cta-ic">✎</div>
+      <div class="q-cta-tx">
+        <span class="q-cta-kick">Fixe o conteúdo · Bioquímica</span>
+        <b>Questões para estudar</b>
+        <span class="q-cta-sub"><span data-q="bioq"></span> questões sobre sinalização, síntese hormonal e metabolismo, com correção e explicação.</span>
+      </div>
+      <button class="q-cta-btn" onclick="irParaQuiz('bioq')">Responder →</button>
+    </div>
 
   <!-- ==================== FARMACOLOGIA ==================== -->
   <div class="discipline d-farmaco">
@@ -2082,6 +2116,16 @@
       <div class="note mech"><span class="nh">Toxicidades para lembrar</span><strong>Doxorrubicina</strong> → cardiotoxicidade; <strong>cisplatina</strong> → nefro e ototoxicidade; <strong>vincristina</strong> → neuropatia periférica; <strong>bleomicina</strong> → fibrose pulmonar; <strong>ciclofosfamida</strong> → cistite hemorrágica (prevenir com mesna).</div>
     </section>
 
+    <div class="q-cta d-farmaco" id="q-farmaco">
+      <div class="q-cta-ic">✎</div>
+      <div class="q-cta-tx">
+        <span class="q-cta-kick">Fixe o conteúdo · Farmacologia</span>
+        <b>Questões para estudar</b>
+        <span class="q-cta-sub"><span data-q="farmaco"></span> questões de farmacocinética/dinâmica, hipoglicemiantes, corticoides e anti-inflamatórios.</span>
+      </div>
+      <button class="q-cta-btn" onclick="irParaQuiz('farmaco')">Responder →</button>
+    </div>
+
   <!-- ==================== IMUNOLOGIA ==================== -->
   <div class="discipline d-imuno">
     <div class="disc-banner" id="mat-imuno"><span class="num">04</span><h2>Imunologia · Celular e molecular</h2></div>
@@ -2530,6 +2574,16 @@
       </table></div>
     </section>
 
+    <div class="q-cta d-imuno" id="q-imuno">
+      <div class="q-cta-ic">✎</div>
+      <div class="q-cta-tx">
+        <span class="q-cta-kick">Fixe o conteúdo · Imunologia</span>
+        <b>Questões para estudar</b>
+        <span class="q-cta-sub"><span data-q="imuno"></span> questões — inclui as 5 de hipersensibilidade (Tipos I–IV e diferenciação Th) no formato de prova, validadas.</span>
+      </div>
+      <button class="q-cta-btn" onclick="irParaQuiz('imuno')">Responder →</button>
+    </div>
+
   <div class="discipline d-caso">
     <div class="disc-banner" id="mat-caso"><span class="num">05</span><h2>Casos clínicos · Integração</h2></div>
 
@@ -2622,6 +2676,16 @@
 
       
     </section>
+
+    <div class="q-cta d-caso" id="q-caso">
+      <div class="q-cta-ic">✎</div>
+      <div class="q-cta-tx">
+        <span class="q-cta-kick">Fixe o conteúdo · Casos clínicos</span>
+        <b>Questões para estudar</b>
+        <span class="q-cta-sub"><span data-q="caso"></span> questões de integração e raciocínio clínico, com correção e explicação.</span>
+      </div>
+      <button class="q-cta-btn" onclick="irParaQuiz('caso')">Responder →</button>
+    </div>
   </div>
 
   <!-- ==================== QUIZ ==================== -->
@@ -2971,6 +3035,7 @@
       const b=document.createElement('button');
       b.className='quiz-tab '+QUIZ[k].cls+(k===cur?' active':'');
       b.textContent=QUIZ[k].nome;
+      b.dataset.key=k;
       b.onclick=()=>{cur=k; document.querySelectorAll('.quiz-tab').forEach(t=>t.classList.remove('active')); b.classList.add('active'); render();};
       tabsEl.appendChild(b);
     });
@@ -3006,6 +3071,22 @@
     }
     resetEl.onclick=render;
     render();
+
+    // Deep-link: chamado pelos botões "Questões para estudar" ao fim de cada disciplina
+    window.irParaQuiz=function(k){
+      if(!QUIZ[k]) return;
+      cur=k;
+      document.querySelectorAll('.quiz-tab').forEach(function(t){t.classList.remove('active');});
+      var tb=Array.prototype.slice.call(document.querySelectorAll('.quiz-tab')).filter(function(t){return t.dataset.key===k;})[0];
+      if(tb) tb.classList.add('active');
+      render();
+      var q=document.getElementById('quiz');
+      if(q) q.scrollIntoView({behavior:'smooth',block:'start'});
+    };
+    // Preenche a contagem de questões de cada disciplina nos blocos de link
+    document.querySelectorAll('[data-q]').forEach(function(el){
+      if(QUIZ[el.dataset.q]) el.textContent=QUIZ[el.dataset.q].perguntas.length;
+    });
   })();
   </script>
 
